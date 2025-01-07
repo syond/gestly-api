@@ -3,6 +3,7 @@
 .phpunit.result.cache
 .env
 .env.*
+!.env.example
 /storage/*.key
 /storage/debugbar
 /storage/framework/cache/data
@@ -23,6 +24,7 @@ _ide_helper_models.php
 /public/css
 /public/js
 /public/mix-manifest.json
+/public/build
 
 # Ignorar arquivos de compilação
 .npm/
@@ -40,3 +42,6 @@ composer.phar
 *.swp
 *.DS_Store
 Thumbs.db
+
+composer.lock
+package-lock.json
