@@ -1,0 +1,64 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Curtis Pacocha II",
+            "birthDate": "1999-01-25",
+            "email": "zetta.howell@gmail.com"
+        },
+        {
+            "id": 2,
+            "name": "syond",
+            "birthDate": "1982-06-06",
+            "email": "wunsch.keith@stanton.com"
+        },
+        {
+            "id": 3,
+            "name": "Mrs. Kelli Bahringer",
+            "birthDate": "2015-03-18",
+            "email": "schulist.emilia@schinner.com"
+        },
+        {
+            "id": 4,
+            "name": "Zora Marks",
+            "birthDate": "1986-01-22",
+            "email": "wlebsack@hotmail.com"
+        },
+        {
+            "id": 5,
+            "name": "Graciela Anderson",
+            "birthDate": "1970-05-03",
+            "email": "dixie50@deckow.com"
+        },
+        {
+            "id": 6,
+            "name": "Hollis Wolf",
+            "birthDate": "2023-11-08",
+            "email": "violet.russel@hotmail.com"
+        },
+        {
+            "id": 7,
+            "name": "Janice Simonis",
+            "birthDate": "1994-02-01",
+            "email": "quinten.wehner@jast.com"
+        },
+        {
+            "id": 8,
+            "name": "Shanon Mante Jr.",
+            "birthDate": "1996-08-12",
+            "email": "rhett85@glover.com"
+        },
+        {
+            "id": 9,
+            "name": "Granville Pacocha",
+            "birthDate": "1998-09-04",
+            "email": "farrell.conrad@gmail.com"
+        },
+        {
+            "id": 10,
+            "name": "Xzavier Bergstrom",
+            "birthDate": "1994-10-01",
+            "email": "murphy.robyn@hotmail.com"
+        }
+    ]
+}
