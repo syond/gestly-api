@@ -9,6 +9,7 @@ Route::middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::post('/users', [UserController::class, 'create']);
     Route::delete('/users/{id}', [UserController::class, 'delete']);
 });
 

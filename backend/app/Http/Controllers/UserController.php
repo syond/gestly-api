@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use \App\Http\Controllers\Utils;
 use \App\Exceptions\NotFoundException;
 use App\Http\Responses\ApiResponse;
@@ -68,5 +69,17 @@ class UserController extends Controller
         })->values()->all();
 
         return response()->json(ApiResponse::success(null, 'User deleted succesfully.'));
+    }
+
+    public function create(Request $request) {
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'birthDate' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+        ]);
+
+        $user = User::create($validateData);
+
+        return response()->json(ApiResponse::success($user, 'User saved successfully.'));
     }
 }
