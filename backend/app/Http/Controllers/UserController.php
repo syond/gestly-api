@@ -10,21 +10,17 @@ use App\Http\Responses\ApiResponse;
 
 class UserController extends Controller
 {
-    private $users = [];
-
-    public function __construct()
-    {
-        $this->users = collect(Utils::loadJsonFile('temp-database.json')['users']);
-    }
+    public function __construct() {}
 
     public function list()
     {
-        return  response()->json($this->users);
+        $users = User::all();
+        return  response()->json($users);
     }
 
     public function show($id)
     {
-        $user = collect($this->users)->firstWhere('id', $id);
+        $user = User::findOrFail($id);
 
         if (!$user) {
             throw new NotFoundException('User not found.');
@@ -35,51 +31,64 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $userIndex = collect($this->users)->search(function ($user) use ($id) {
-            return $user['id'] == $id;
-        });
-
-        if (!$userIndex) {
-            throw new NotFoundException('User not found.');
-        }
-
-        $validateData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-        ]);
-        
-        $this->users[$userIndex] = array_merge($this->users[$userIndex], $validateData);
-
-        // sobrescreve o "banco de dados", só pra simular
-        Utils::writeFile('temp-database.json', 'users', $this->users);
-
-        return response()->json(ApiResponse::success($this->users[$userIndex], 'User updated succesfully.'));
-    }
-
-    public function delete($id)
-    {
-        $user = collect($this->users)->firstWhere('id', $id);
+        $user = User::findOrFail($id);
 
         if (!$user) {
             throw new NotFoundException('User not found.');
         }
 
-        collect($this->users)->reject(function ($user) use ($id) {
-            return $user['id'] === $id;
-        })->values()->all();
+        if ($request->is('api/v2/*')) {
+            $validateData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255',
+                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+                'cpf' => 'required|string|max:11',
+            ]);
+        } else {
+            $validateData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255',
+                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+            ]);
+        }
+
+        $user->update($validateData);
+
+        return response()->json(ApiResponse::success($user, 'User updated succesfully.'));
+    }
+
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+
+        if (!$user) {
+            throw new NotFoundException('User not found.');
+        }
+
+        $user->delete();
 
         return response()->json(ApiResponse::success(null, 'User deleted succesfully.'));
     }
 
-    public function create(Request $request) {
-        $validateData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-            'birthDate' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
-        ]);
+    public function create(Request $request)
+    {
+        if ($request->is('api/v2/*')) {
+            $validateData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255',
+                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+                'cpf' => 'required|string|max:11',
+            ]);
+        } else {
+            $validateData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255',
+                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+            ]);
+        }
 
         $user = User::create($validateData);
 
-        return response()->json(ApiResponse::success($user, 'User saved successfully.'));
+        return response()->json(ApiResponse::success($user, 'User created successfully.'));
     }
 }

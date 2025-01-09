@@ -11,6 +11,7 @@ class User extends Model
         'name',
         'email',
         'birth_date',
+        'cpf',
     ];
 
     // Garantee the conversion to correctly data type for each field

@@ -3,9 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
+Route::prefix('api/v1')->middleware('api')->group(function () {
+    Route::get('/users', [UserController::class, 'list']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::post('/users', [UserController::class, 'create']);
+    Route::delete('/users/{id}', [UserController::class, 'delete']);
+});
 
-
-Route::middleware('api')->group(function () {
+Route::prefix('api/v2')->middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::put('/users/{id}', [UserController::class, 'update']);
