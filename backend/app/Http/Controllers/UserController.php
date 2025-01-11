@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('posts')->find($id);
 
         if (!$user) {
             throw new NotFoundException('User not found.');
