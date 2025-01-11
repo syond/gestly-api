@@ -18,4 +18,8 @@ class User extends Model
     protected $casts = [
         'birth_date' => 'datetime',
     ];
+
+    function posts() {
+        return $this->hasMany(Post::class);
+    }
 }

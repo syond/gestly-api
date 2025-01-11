@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use \App\Http\Controllers\Utils;
 use \App\Exceptions\NotFoundException;
 use App\Http\Responses\ApiResponse;
 
 class UserController extends Controller
 {
-    public function __construct() {}
-
     public function list()
     {
         $users = User::all();
