@@ -34,20 +34,12 @@ class UserController extends Controller
             throw new NotFoundException('User not found.');
         }
 
-        if ($request->is('api/v2/*')) {
-            $validateData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|max:255',
-                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
-                'cpf' => 'required|string|max:11',
-            ]);
-        } else {
-            $validateData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|max:255',
-                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
-            ]);
-        }
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+            'cpf' => 'required|string|max:11',
+        ]);
 
         $user->update($validateData);
 
@@ -69,20 +61,12 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->is('api/v2/*')) {
-            $validateData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|max:255',
-                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
-                'cpf' => 'required|string|max:11',
-            ]);
-        } else {
-            $validateData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|max:255',
-                'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
-            ]);
-        }
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'birth_date' => 'required|date_format:Y-m-d\TH:i:s.v\Z', // Validate ISODateTime format with milliseconds
+            'cpf' => 'required|string|max:11',
+        ]);
 
         $user = User::create($validateData);
 
