@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class UserControllerTest extends TestCase
 {
@@ -69,5 +70,27 @@ class UserControllerTest extends TestCase
                     "cpf" => "12345678911"
                   ],
             ]);
+        
+        $this->assertDatabaseHas('users', [
+            'email' => 'changing_email@gmail.com',
+        ]);
+    }
+
+    public function test_show_user() {
+        $responsePost = $this->postJson(self::BASE_URI_V1, $this->dataProvider);
+        $responsePostData = $responsePost->json('data');
+
+        $responseShow = $this->getJson(self::BASE_URI_V1 . '/' . $responsePostData['id']);
+
+        $responseShow->assertStatus(200)
+        ->assertJson($responseShow->json());
+    }
+
+    public function test_list_user() {
+        User::factory()->count(3)->create();
+
+        $response = $this->getJson(self::BASE_URI_V1);
+        $response->assertStatus(200)
+            ->assertJsonCount(3);
     }
 }
