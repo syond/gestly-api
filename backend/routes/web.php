@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostInteractionController;
 
 Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
@@ -32,6 +33,9 @@ Route::prefix('api/v2')->middleware('api')->group(function () {
     Route::get('/posts/{postId}', [PostController::class, 'show']);
     Route::delete('/posts/{postId}', [PostController::class, 'delete']);
     Route::put('/posts/{postId}', [PostController::class, 'update']);
+    
+    Route::post('/post-interactions', [PostInteractionController::class, 'create']);
+    Route::put('/post-interactions/{id}', [PostInteractionController::class, 'update']);
 });
 
 Route::get('/', function () {

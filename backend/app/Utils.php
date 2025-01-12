@@ -29,7 +29,7 @@ class Utils
         }, range(1, $count));
     }
 
-    public static function writeFile(string $fileName, string $key, $data)
+    public static function writeFile(string $fileName, $data, string $key)
     {
         $path = __DIR__ . '/' . $fileName;
 

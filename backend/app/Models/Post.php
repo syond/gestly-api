@@ -24,4 +24,10 @@ class Post extends Model
     function category() {
         return $this->belongsTo(Category::class);
     }
+
+    function userIntereactions() {
+        return $this->belongsToMany(User::class, 'post_interactions')
+            ->withPivot('interaction_type')
+            ->withTimestamps();
+    }
 }
