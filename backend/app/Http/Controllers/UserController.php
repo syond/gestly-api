@@ -43,7 +43,7 @@ class UserController extends Controller
 
         $user->update($validateData);
 
-        return response()->json(ApiResponse::success($user, 'User updated succesfully.'));
+        return ApiResponse::success($user, 'User updated successfully.');
     }
 
     public function delete($id)
@@ -70,6 +70,6 @@ class UserController extends Controller
 
         $user = User::create($validateData);
 
-        return response()->json(ApiResponse::success($user, 'User created successfully.'));
+        return ApiResponse::success($user, 'User created successfully.', 201);
     }
 }
