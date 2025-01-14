@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostInteractionController;
+use App\Http\Controllers\MediaObjectController;
 
 Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
@@ -21,6 +22,12 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     
     Route::post('/post-interactions', [PostInteractionController::class, 'create']);
     Route::put('/post-interactions/{id}', [PostInteractionController::class, 'update']);
+
+    Route::post('/medias', [MediaObjectController::class, 'create']);
+    Route::put('/medias/{id}', [MediaObjectController::class, 'update']);
+    Route::get('/medias', [MediaObjectController::class, 'list']);
+    Route::get('/medias/{id}', [MediaObjectController::class, 'show']);
+    Route::delete('/medias/{id}', [MediaObjectController::class, 'delete']);
 });
 
 Route::get('/', function () {

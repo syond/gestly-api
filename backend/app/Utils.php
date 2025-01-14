@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App;
 
 use Faker\Factory as Faker;
 
@@ -35,5 +35,11 @@ class Utils
 
         if ($key) file_put_contents($path, json_encode([$key => $data], JSON_PRETTY_PRINT));
         else file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public static function toSnakeCase($string) {
+        $string = preg_replace('/[^a-zA-Z0-9]+/', '_', $string);
+        $string = trim($string, '_');
+        return strtolower($string);            
     }
 }

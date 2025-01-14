@@ -17,7 +17,7 @@ class User extends Model
         'cpf',
     ];
 
-    // Guarantee the conversion to correctly data type for each field
+    // Guarantee correctly data type conversion for each field
     protected $casts = [
         'birth_date' => 'datetime',
     ];
