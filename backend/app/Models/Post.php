@@ -17,17 +17,25 @@ class Post extends Model
         'category_id',
     ];
 
-    function user() {
+    function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    function category() {
+    function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    function userIntereactions() {
+    function userIntereactions()
+    {
         return $this->belongsToMany(User::class, 'post_interactions')
             ->withPivot('interaction_type')
             ->withTimestamps();
+    }
+
+    function mediaPost()
+    {
+        return $this->hasMany(MediaPost::class);
     }
 }

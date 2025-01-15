@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Utils;
-use App\Repository\MediaPostRepository;
 use App\Models\MediaObject;
 
 class MediaObjectRepository
@@ -67,7 +66,7 @@ class MediaObjectRepository
             'file_extension' => $fileObject['fileExtension'],
         ]);
 
-        return $mediaObject;
+        return $mediaObject->toArray();
     }
 
     public function deleteMediaObject($id)

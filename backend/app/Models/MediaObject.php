@@ -11,5 +11,9 @@ class MediaObject extends Model
         'file_path',
         'file_type',
         'file_extension',
-    ];    
+    ];
+
+    public function mediaPost() {
+        return $this->belongsToMany(MediaPost::class);
+    }
 }
