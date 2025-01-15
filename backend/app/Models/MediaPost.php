@@ -14,7 +14,7 @@ class MediaPost extends Model
 
     public function mediaObject()
     {
-        return $this->hasMany(MediaObject::class);
+        return $this->belongsTo(MediaObject::class);
     }
 
     public function post()

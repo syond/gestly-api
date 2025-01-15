@@ -14,6 +14,6 @@ class MediaObject extends Model
     ];
 
     public function mediaPost() {
-        return $this->belongsToMany(MediaPost::class);
+        return $this->hasOne(MediaPost::class, 'media_object_id');
     }
 }

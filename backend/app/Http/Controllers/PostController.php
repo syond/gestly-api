@@ -16,7 +16,7 @@ class PostController extends Controller
     }
 
     public function show($postId) {
-        $posts = Post::find($postId);
+        $posts = Post::with(['mediaPosts.mediaObject'])->find($postId);
         
         if (!$posts) {
             throw new NotFoundException('Post not found.');

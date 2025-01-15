@@ -34,7 +34,7 @@ class Post extends Model
             ->withTimestamps();
     }
 
-    function mediaPost()
+    function mediaPosts()
     {
         return $this->hasMany(MediaPost::class);
     }
