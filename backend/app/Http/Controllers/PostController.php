@@ -10,14 +10,16 @@ use App\Exceptions\NotFoundException;
 
 class PostController extends Controller
 {
-    public function list() {
+    public function list()
+    {
         $posts = Post::all();
         return response()->json($posts);
     }
 
-    public function show($postId) {
-        $posts = Post::with(['mediaPosts.mediaObject'])->find($postId);
-        
+    public function show($postId)
+    {
+        $posts = Post::with(['category', 'user', 'userIntereactions', 'mediaPosts.mediaObject'])->find($postId);
+
         if (!$posts) {
             throw new NotFoundException('Post not found.');
         }
@@ -25,7 +27,8 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function delete($postId) {
+    public function delete($postId)
+    {
         $post = Post::find($postId);
 
         if (!$post) {
@@ -37,7 +40,8 @@ class PostController extends Controller
         return response()->json(ApiResponse::success(null, 'Post deleted succesfully.'));
     }
 
-    public function createByUser(Request $request, $userId) {
+    public function create(Request $request, $userId)
+    {
         $user = User::find($userId);
 
         if (!$user) {
@@ -48,17 +52,17 @@ class PostController extends Controller
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:150',
             'address' => 'nullable|string|max:150',
+            'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
         ]);
-
-        $validateData['user_id'] = $user->id;
 
         Post::create($validateData);
 
         return response()->json(ApiResponse::success($validateData, 'Post created successfully.'));
     }
 
-    public function listByUser($userId) {
+    public function listByUser($userId)
+    {
         $user = User::find($userId);
 
         if (!$user) {

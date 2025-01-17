@@ -12,12 +12,13 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::post('/users', [UserController::class, 'create']);
     Route::delete('/users/{id}', [UserController::class, 'delete']);
+    
     Route::get('/users/{userId}/posts', [PostController::class, 'listByUser']);
-    Route::post('/users/{userId}/posts', [PostController::class, 'createByUser']);
-
+    
     Route::get('/posts', [PostController::class, 'list']);
     Route::get('/posts/{postId}', [PostController::class, 'show']);
     Route::delete('/posts/{postId}', [PostController::class, 'delete']);
+    Route::post('/posts', [PostController::class, 'create']);
     Route::put('/posts/{postId}', [PostController::class, 'update']);
     
     Route::post('/post-interactions', [PostInteractionController::class, 'create']);
