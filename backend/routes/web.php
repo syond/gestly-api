@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostInteractionController;
 use App\Http\Controllers\MediaObjectController;
+use App\Http\Controllers\FormController;
 
 Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
@@ -29,6 +30,12 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::get('/medias', [MediaObjectController::class, 'list']);
     Route::get('/medias/{id}', [MediaObjectController::class, 'show']);
     Route::delete('/medias/{id}', [MediaObjectController::class, 'delete']);
+
+    Route::get('/forms', [FormController::class, 'list']);
+    Route::get('/forms/{id}', [FormController::class, 'show']);
+    Route::put('/forms/{id}', [FormController::class, 'update']);
+    Route::post('/forms', [FormController::class, 'create']);
+    Route::delete('/forms/{id}', [FormController::class, 'delete']);
 });
 
 Route::get('/', function () {
