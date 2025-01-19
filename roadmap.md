@@ -1,6 +1,41 @@
 # App para postagem de anúncios
 
-## features
+## features back
+### Posts
+- [x] persistência de post;
+- [x] persistência de medias vinculadas ao post;
+- [x] eager loading para medias vinculadas;
+- [x] persistência de interações com o post (like, favorite, etc...);
+- [x] eager loading para categoria vinculada;
+- [x] eager loading para interações (talvez, não sei);
+- [ ] armazenar um "draft" de posts que não terminou de criar;
+- [ ] alterar coluna `address` para ser chave estrangeira da tabela Address;
+
+### Post Interactions
+- [ ] revisar o metodo update do controller, pelo visto so vai servir para atualizar se o tipo de interação for `INTERACTION_TYPE_RATE`;
+- [ ] add metodo `delete` para todos os `INTERACTION_TYPE !== 3`;
+
+### Medias
+- [x] persistência;
+
+### Users
+- [x] persistência;
+- [ ] adicionar mais colunas de informação de contato;
+
+### Address
+- [ ] criar migration e relacionar com tabela users;
+- [ ] decidir se os dados de geolocalização vão ficar nessa ou em outra tabela;
+
+### Categories
+- [x] persistência;
+
+### Form
+- [x] criar feature para construir formulários dinâmicos que serão utilizados pelas categorias;
+
+
+
+
+## features front
 - [ ] Post
     - titulo
     - descrição
