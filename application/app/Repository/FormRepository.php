@@ -8,6 +8,27 @@ use App\Exceptions\NotFoundException;
 
 class FormRepository
 {
+    public function create(string $title, $isDefault)
+    {
+        $form = Form::create([
+            'title' => $title,
+            'is_default' => $isDefault,
+        ]);
+        return $form;
+    }
+
+    public function update($id, $data)
+    {
+        try {
+            $form = Form::find($id);
+            $form->update($data);
+            // dd($form);
+            return $form;
+        } catch (\Throwable $e) {
+            throw new NotFoundException($e->getMessage());
+        }
+    }
+
     public function createFormWithInputs($validatedData)
     {
         $inputs = $validatedData['form_inputs'];
@@ -82,7 +103,8 @@ class FormRepository
         return $forms;
     }
 
-    public function deleteFormWithInputs($formId) {
+    public function deleteFormWithInputs($formId)
+    {
         $form = Form::find($formId);
 
         if (!$form) throw new NotFoundException('Form not found.');

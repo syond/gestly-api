@@ -4,40 +4,66 @@ namespace App\Repository;
 
 use App\Exceptions\NotFoundException;
 use App\Models\FormInput;
+use App\Models\Form;
 
 class FormInputRepository
 {
     public function listInputs()
     {
-        $forms = FormInput::get();
-        return $forms;
+        $formInputs = FormInput::get();
+        return $formInputs;
     }
 
     public function showInput($id)
     {
-        $form = FormInput::find($id);
-        if (!$form) throw new NotFoundException('Input not found.');
-        return $form;
+        $formInput = FormInput::find($id);
+        if (!$formInput) throw new NotFoundException('Input not found.');
+        return $formInput;
     }
 
     public function createInput($validatedData)
     {
-        $form = FormInput::create($validatedData);
-        return $form;
+        $formInput = FormInput::create($validatedData);
+        return $formInput;
     }
 
-    public function updateInput($validatedData, $id) {
-        $form = FormInput::find($id);
-        if (!$form) throw new NotFoundException('Input not found.');
-        $form->update($validatedData);
-        return $form;
+    public function updateInput($validatedData, $id)
+    {
+        $formInput = FormInput::find($id);
+        if (!$formInput) throw new NotFoundException('Input not found.');
+        $formInput->update($validatedData);
+        return $formInput;
     }
 
     public function deleteInput($id)
     {
-        $form = FormInput::find($id);
-        if (!$form) throw new NotFoundException('Input not found.');
-        $form->delete($id);
-        return $form;
+        $formInput = FormInput::find($id);
+        if (!$formInput) throw new NotFoundException('Input not found.');
+        $formInput->delete($id);
+        return $formInput;
+    }
+
+    public function associateInputsToForm(Form $form, array $inputIds)
+    {
+        $form->formInputs()->syncWithoutDetaching($inputIds);
+        return $form->load('formInputs');
+    }
+
+    /**
+     * Associate, Create and associate or update and asssociate a FormInput
+     */
+    public function syncFormInputs(Form $form, array $formInputs)
+    {
+        foreach ($formInputs as $input) {
+            if (is_numeric($input)) {
+                $this->associateInputsToForm($form, [$input]);
+            } elseif (array_key_exists('id', $input)) {
+                $updatedInput = $this->updateInput($input, $input['id']);
+                $this->associateInputsToForm($form, [$updatedInput->id]);
+            } else {
+                $persistedInput = $this->createInput($input);
+                $this->associateInputsToForm($form, [$persistedInput->id]);
+            }
+        }
     }
 }
