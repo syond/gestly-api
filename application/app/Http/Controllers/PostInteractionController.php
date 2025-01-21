@@ -118,4 +118,10 @@ class PostInteractionController extends Controller
 
         return response()->json(ApiResponse::success($interaction, 'Post interection updated succesfully.'));
     }
+
+    public function delete($id) {
+        $interaction = PostInteraction::find($id);
+        $interaction->delete();
+        return $interaction;
+    }
 }

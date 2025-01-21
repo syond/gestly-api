@@ -40,13 +40,13 @@ class PostController extends Controller
         return response()->json(ApiResponse::success(null, 'Post deleted succesfully.'));
     }
 
-    public function create(Request $request, $userId)
+    public function create(Request $request)
     {
-        $user = User::find($userId);
+        // $user = User::find($userId);
 
-        if (!$user) {
-            throw new NotFoundException('User not found.');
-        }
+        // if (!$user) {
+        //     throw new NotFoundException('User not found.');
+        // }
 
         $validateData = $request->validate([
             'title' => 'required|string|max:150',
@@ -58,7 +58,7 @@ class PostController extends Controller
 
         Post::create($validateData);
 
-        return response()->json(ApiResponse::success($validateData, 'Post created successfully.'));
+        return ApiResponse::success($validateData, 'Post created successfully.');
     }
 
     public function listByUser($userId)

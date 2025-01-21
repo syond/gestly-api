@@ -25,6 +25,7 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     
     Route::post('/post-interactions', [PostInteractionController::class, 'create']);
     Route::put('/post-interactions/{id}', [PostInteractionController::class, 'update']);
+    Route::delete('/post-interactions/{id}', [PostInteractionController::class, 'delete']);
 
     Route::post('/medias', [MediaObjectController::class, 'create']);
     Route::put('/medias/{id}', [MediaObjectController::class, 'update']);
