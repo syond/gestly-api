@@ -47,11 +47,11 @@ class MediaObjectController extends Controller
 
         $file = $request->file('file');
 
-        $module = $request->query('module');
+        if ($request->query('module') === 'post' && $request->has('post_id')) {
+            return ApiResponse::success($this->mediaPostRepository->create($file, $request->input('post_id')), 'Media object created successfully');
+        }
 
-        if ($module === 'post' && $request->has('post_id')) return ApiResponse::success($this->mediaPostRepository->create($file, $request->input('post_id')), 'Media object updated successfully');
-
-        return ApiResponse::success($this->mediaObjectRepository->createMediaObject($file), 'Media object updated successfully');
+        return ApiResponse::success($this->mediaObjectRepository->createMediaObject($file), 'Media object created successfully');
     }
 
     public function update(Request $request, $id)
