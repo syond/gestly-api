@@ -7,6 +7,7 @@ use App\Http\Controllers\PostInteractionController;
 use App\Http\Controllers\MediaObjectController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormInputController;
+use App\Http\Controllers\CategoryController;
 
 Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
@@ -44,6 +45,12 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::delete('/form-inputs/{id}', [FormInputController::class, 'delete']);
     Route::post('/form-inputs', [FormInputController::class, 'create']);
     Route::put('/form-inputs/{id}', [FormInputController::class, 'update']);
+
+    Route::get('/categories', [CategoryController::class, 'list']);
+    Route::get('/categories/{id}', [CategoryController::class, 'show']);
+    Route::delete('/categories/{id}', [CategoryController::class, 'delete']);
+    Route::post('/categories', [CategoryController::class, 'create']);
+    Route::put('/categories/{id}', [CategoryController::class, 'update']);
 });
 
 Route::get('/', function () {
