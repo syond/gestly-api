@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Model;
+use App\Models\UserOauthAccount;
  
 class User extends Model
 {
     use HasFactory;
+
+    const REGISTRATION_TYPE_TRADITIONAL = 0;
+    const REGISTRATION_TYPE_OAUTH = 1;
 
     // Allow mass assignment for these fields
     protected $fillable = [
@@ -15,6 +19,7 @@ class User extends Model
         'email',
         'birth_date',
         'cpf',
+        'registration_method',
     ];
 
     // Guarantee correctly data type conversion for each field
@@ -35,5 +40,9 @@ class User extends Model
         return $this->belongsToMany(Post::class, 'post_interactions')
             ->withPivot('interaction_type')
             ->withTimestamps();
+    }
+
+    public function UserOauthAccount() {
+        return $this->hasOne(UserOauthAccount::class);
     }
 }

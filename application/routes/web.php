@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostInteractionController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\MediaObjectController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormInputController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthController;
 
 Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::get('/users', [UserController::class, 'list']);
@@ -15,15 +17,15 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::post('/users', [UserController::class, 'create']);
     Route::delete('/users/{id}', [UserController::class, 'delete']);
-    
+
     Route::get('/users/{userId}/posts', [PostController::class, 'listByUser']);
-    
+
     Route::get('/posts', [PostController::class, 'list']);
     Route::get('/posts/{postId}', [PostController::class, 'show']);
     Route::delete('/posts/{postId}', [PostController::class, 'delete']);
     Route::post('/posts', [PostController::class, 'create']);
     Route::put('/posts/{postId}', [PostController::class, 'update']);
-    
+
     Route::post('/post-interactions', [PostInteractionController::class, 'create']);
     Route::put('/post-interactions/{id}', [PostInteractionController::class, 'update']);
     Route::delete('/post-interactions/{id}', [PostInteractionController::class, 'delete']);
@@ -52,6 +54,47 @@ Route::prefix('api/v1')->middleware('api')->group(function () {
     Route::post('/categories', [CategoryController::class, 'create']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
 });
+
+
+Route::get('/auth/{provider}', [AuthController::class, 'redirectToProvider']);
+Route::get('/auth/{provider}/redirect', [AuthController::class, 'handleProviderCallback']);
+
+// Será alterado para => Route::get('auth/{provider}')
+// Route::get('/auth/github', function () {
+//     return Socialite::driver('github')
+//         ->scopes(['read:user', 'public_repo'])
+//         ->redirect();
+// });
+
+// Route::get('/auth/github/redirect', function () {
+//     $user = Socialite::driver('github')->user();
+
+//     $test = [
+//         'id' => $user->getId(),
+//         'email' => $user->getEmail(),
+//         'nickName' => $user->getNickname(),
+//         'name' => $user->getName(),
+//         'avatar' => $user->getAvatar(),
+//     ];
+
+//     dd($test);
+
+
+//     // $user->token
+
+//     // $user = User::updateOrCreate([
+//     //     'github_id' => $githubUser->id,
+//     // ], [
+//     //     'name' => $githubUser->name,
+//     //     'email' => $githubUser->email,
+//     //     'github_token' => $githubUser->token,
+//     //     'github_refresh_token' => $githubUser->refreshToken,
+//     // ]);
+
+//     // Auth::login($user);
+
+//     return redirect('/dashboard');
+// });
 
 Route::get('/', function () {
     return view('welcome');
