@@ -13,6 +13,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
 
+# INSTALL PHP EXTENSIONS
+RUN docker-php-ext-install pdo_mysql
 
 COPY ./scripts/startup.sh /usr/local/bin/startup.sh
 RUN chmod +x /usr/local/bin/startup.sh
