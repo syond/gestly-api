@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FormInput extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'content',
     ];
