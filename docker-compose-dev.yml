@@ -24,6 +24,24 @@ services:
       - ./application:/usr/share/nginx/html
       - ./containers/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
 
+  mysql:
+    image: mysql:8.0
+    container_name: gestly-database
+    networks:
+      - gestly-network
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: gestlydb
+      MYSQL_USER: gestly321
+      MYSQL_PASSWORD: gestly321
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
 networks:
   gestly-network:
     driver: bridge
